@@ -5,7 +5,7 @@ Mailer API powerd by Codeigniter
 
 BaseURL is set in 
 
-`api/v1/mailer`: Send mail; see params below
+`api/v1/mailer [POST]`: Send mail; see params below
 
 - `email`: Recipient email
 - `name`: Recipient name

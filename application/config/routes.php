@@ -54,4 +54,4 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 # Mail endpoint
-$route['api/v1/mailer'] = 'site/send';
+$route['api/v1/mailer']['post'] = 'site/send';
