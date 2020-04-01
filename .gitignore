@@ -1,0 +1,4 @@
+application/config/*.ini
+.zip
+.DS_Store
+env.ini
