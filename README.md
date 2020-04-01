@@ -1,0 +1,2 @@
+# mailer
+Codeigniter mailer API
