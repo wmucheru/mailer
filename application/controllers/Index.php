@@ -12,7 +12,7 @@ class Index extends CI_Controller {
      * @param body: body of email
      * 
     */
-    function mailer($obj){
+    function mailer(){
         $obj = (object) $this->input->post();
 
         # Get vars
@@ -64,6 +64,8 @@ class Index extends CI_Controller {
             }
         }
 
-        return $response;
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($response));
     }
 }
