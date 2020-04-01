@@ -13,6 +13,21 @@ class Index extends CI_Controller {
      * 
     */
     function mailer(){
+
+        /**
+         * 
+         * Due to this error on some servers, we are removing error reporting to enable proper
+         * 
+         * <p>Severity: Notice</p>
+         * <p>Message: Use of undefined constant INTL_IDNA_VARIANT_UTS46 - assumed 'INTL_IDNA_VARIANT_UTS46'</p>
+         * <p>Filename: libraries/Email.php</p>
+         * <p>Line Number: 1859</p>
+         * 
+         * CI version 3.1.11
+         * 
+        */
+        error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+
         $obj = (object) $this->input->post();
 
         # Get vars
