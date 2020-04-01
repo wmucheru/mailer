@@ -16,10 +16,10 @@ class Index extends CI_Controller {
         $obj = (object) $this->input->post();
 
         # Get vars
-        $email = $obj->email ?: '';
-        $name = $obj->name ?: '-';
-        $subject = $obj->subject ?: '';
-        $body = $obj->body ?: '';
+        $email = isset($obj->email) ? $obj->email : '';
+        $name = isset($obj->name) ? $obj->name : '-';
+        $subject = isset($obj->subject) ? $obj->subject : '';
+        $body = isset($obj->body) ? $obj->body : '';
 
         # var_dump($obj);
 
@@ -33,7 +33,7 @@ class Index extends CI_Controller {
             $response['message'] = 'Specify subject';
         }
         elseif(!$body){
-            $response['subject'] = 'Specify message';
+            $response['message'] = 'Specify body';
         }
         else{
             $this->load->library('email');
@@ -45,7 +45,7 @@ class Index extends CI_Controller {
             $this->email->set_newline("\r\n");
 
             $serviceName = $this->config->item('site_name');
-            $serviceEmail = $this->config->item('site_email');
+            $serviceEmail = $this->config->item('email');
 
             $this->email->from($serviceEmail, $serviceName);
             $this->email->to($email);
