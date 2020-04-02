@@ -16,7 +16,7 @@ class Index extends CI_Controller {
 
         /**
          * 
-         * Due to this error on some servers, we are removing error reporting to enable proper
+         * Due to this error on some servers, we are removing error reporting to enable proper response rendering
          * 
          * <p>Severity: Notice</p>
          * <p>Message: Use of undefined constant INTL_IDNA_VARIANT_UTS46 - assumed 'INTL_IDNA_VARIANT_UTS46'</p>
