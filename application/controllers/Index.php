@@ -37,6 +37,9 @@ class Index extends CI_Controller {
         $body = isset($obj->body) ? $obj->body : '';
 
         # var_dump($obj);
+        if(isset($obj->debug)){
+            $response['post'] = $this->input->post();
+        }
 
         if(!$email){
             $response['message'] = 'Specify email';
