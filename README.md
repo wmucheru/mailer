@@ -9,5 +9,6 @@ BaseURL is set in
 
 - `email`: Recipient email
 - `name`: Recipient name
+- `replyto`: Reply-to email
 - `subject`: Email subject
 - `body`: Email body

@@ -32,6 +32,7 @@ class Index extends CI_Controller {
 
         # Get vars
         $email = isset($obj->email) ? $obj->email : '';
+        $replyTo = isset($obj->replyto) ? $obj->replyto : '';
         $name = isset($obj->name) ? $obj->name : '-';
         $subject = isset($obj->subject) ? $obj->subject : '';
         $body = isset($obj->body) ? $obj->body : '';
@@ -67,9 +68,15 @@ class Index extends CI_Controller {
 
             $this->email->from($serviceEmail, $serviceName);
             $this->email->to($email);
-            $this->email->reply_to($email, $name);
             $this->email->subject($subject);
             $this->email->message($body);
+
+            if($replyTo != ''){
+                $this->email->reply_to($replyTo);
+            }
+            else{
+                $this->email->reply_to($serviceEmail, $serviceName);
+            }
 
             if($this->email->send()){
                 $response['message'] = 'E-mail sent to '. $email; 
