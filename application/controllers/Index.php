@@ -30,23 +30,40 @@ class Index extends CI_Controller {
 
         $obj = (object) $this->input->post();
 
-        # Get vars
-        $email = isset($obj->email) ? $obj->email : '';
-        $replyTo = isset($obj->replyto) ? $obj->replyto : '';
-        $name = isset($obj->name) ? $obj->name : '-';
-        $subject = isset($obj->subject) ? $obj->subject : '';
-        $body = isset($obj->body) ? $obj->body : '';
-
-        # var_dump($obj);
+        # var_dump($obj); exit();
+        
         if(isset($obj->debug)){
             $response['post'] = $this->input->post();
         }
+        
+        $serviceName = $this->config->item('site_name');
+        $serviceEmail = $this->config->item('email');
+
+        # Email vars
+        $email = isset($obj->email) ? $obj->email : '';
+        $subject = isset($obj->subject) ? $obj->subject : '';
+        $body = isset($obj->body) ? $obj->body : '';
+
+        # Sender info
+        $fromEmail = isset($obj->from_email) ? $obj->from_email : $serviceEmail;
+        $fromName = isset($obj->from_name) ? $obj->from_name : $serviceName;
+
+        # Reply to
+        $replyEmail = isset($obj->reply_email) ? $obj->reply_email : $serviceEmail;
+        $replyName = isset($obj->reply_name) ? $obj->reply_name : $serviceName;
+
+        # Meta
+        $protocol = isset($obj->protocol) ? $obj->protocol : 'mail';
+
+        # SMTP vars
+        $SMTPHost = isset($obj->smtp_host) ? $obj->smtp_host : '';
+        $SMTPUser = isset($obj->smtp_user) ? $obj->smtp_user : '';
+        $SMTPPassword = isset($obj->smtp_pass) ? $obj->smtp_pass : '';
+        $SMTPPort = isset($obj->smtp_port) ? $obj->smtp_port : '';
+        $SMTPCrypto = isset($obj->smtp_crypto) ? $obj->smtp_crypto : '';
 
         if(!$email){
             $response['message'] = 'Specify email';
-        }
-        elseif(!$name){
-            $response['message'] = 'Specify name';
         }
         elseif(!$subject){
             $response['message'] = 'Specify subject';
@@ -56,27 +73,26 @@ class Index extends CI_Controller {
         }
         else{
             $this->load->library('email');
-
+            
             $config['mailtype'] = 'html';
-            $config['protocol'] = 'mail';
+
+            if($protocol == 'smtp'){
+                $config['protocol'] = $protocol;
+                $config['smtp_host'] = $SMTPHost;
+                $config['smtp_user'] = $SMTPUser;
+                $config['smtp_pass'] = $SMTPPassword;
+                $config['smtp_port'] = $SMTPPort;
+                $config['smtp_crypto'] = $SMTPCrypto;
+            }
 
             $this->email->initialize($config);
             $this->email->set_newline("\r\n");
 
-            $serviceName = $this->config->item('site_name');
-            $serviceEmail = $this->config->item('email');
-
-            $this->email->from($serviceEmail, $serviceName);
+            $this->email->from($fromEmail, $fromName);
             $this->email->to($email);
             $this->email->subject($subject);
             $this->email->message($body);
-
-            if($replyTo != ''){
-                $this->email->reply_to($replyTo);
-            }
-            else{
-                $this->email->reply_to($serviceEmail, $serviceName);
-            }
+            $this->email->reply_to($replyEmail, $replyName);
 
             if($this->email->send()){
                 $response['message'] = 'E-mail sent to '. $email; 
