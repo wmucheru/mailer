@@ -1,6 +1,12 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Index extends CI_Controller {
+class Site extends CI_Controller {
+
+    function index(){
+        return_json([
+            'status'=>'OK'
+        ]);
+    }
 
     /**
      * 
@@ -98,10 +104,10 @@ class Index extends CI_Controller {
                 $response['message'] = 'E-mail sent to '. $email; 
             }
             else{
-                $response = array(
+                $response = [
                     'error'=>true,
                     'message'=>$this->email->print_debugger(),
-                ); 
+                ]; 
             }
         }
 

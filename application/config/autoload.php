@@ -1,15 +1,15 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-$autoload['packages'] = array();
+$autoload['packages'] = [];
 
-$autoload['libraries'] = array();
+$autoload['libraries'] = [];
 
-$autoload['drivers'] = array();
+$autoload['drivers'] = [];
 
-$autoload['helper'] = array('html');
+$autoload['helper'] = ['html', 'site'];
 
-$autoload['config'] = array();
+$autoload['config'] = [];
 
-$autoload['language'] = array();
+$autoload['language'] = [];
 
-$autoload['model'] = array();
+$autoload['model'] = [];
